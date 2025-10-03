@@ -101,7 +101,9 @@ export const fetchStats = async() => {
 
 export const restockService = async(quantityBought,itemId) => {
     try{
-        const result1 = await Item.findOne({where: {id: itemId} }, {attributes: ["stock_quantity"]})
+        const result1 = await Item.findOne({where: {id: itemId} }, 
+            {attributes: ["stock_quantity"]})
+        
 
         const newQuantity = result1.stock_quantity + quantityBought
         await Item.update({stock_quantity:newQuantity},{where: {id: itemId}})
