@@ -30,16 +30,27 @@ export const deleteItemService = async(itemId) => {
     }
 }
 
-export const updateItemService = async(req, res) => {
-    try{
-       const {itemId} = req.params
-       const {name, stock_quantity, price} = req.body
-       const updatedItem = await Item.update({name, stock_quantity, price},{where:{id: itemId}});
-       return {message:"updated successfully"}
-    }catch(error){
-        throw new Error("Error updatin item"+error.message)
+export const updateItemService = async (req, res) => {
+  try {
+    const { itemId } = req.params;
+    const { name, stock_quantity, price } = req.body;
+
+    const existingItem = await Item.findOne({ where: { id: itemId } });
+    if (!existingItem) {
+      throw new Error("Item not found");
     }
-}
+
+    await Item.update(
+      { name, stock_quantity, price },
+      { where: { id: itemId } }
+    );
+
+    return { message: "updated successfully" };
+  } catch (error) {
+    throw new Error("Error updating item: " + error.message);
+  }
+};
+
 
 export const fetchItemWithId = async(itemId) => {
     try{
