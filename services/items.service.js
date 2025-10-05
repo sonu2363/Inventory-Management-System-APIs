@@ -13,7 +13,7 @@ export const fetchAllItems = async () => {
 
 export const createItemService = async (itemData) => {
     try{
-        console.log("itemData",itemData)
+      
         const newItem = await Item.create(itemData);
         return newItem;
     } catch(error) {
@@ -21,14 +21,21 @@ export const createItemService = async (itemData) => {
     }
 }
 
-export const deleteItemService = async(itemId) => {
-    try{
-        const deletedId = await Item.destroy({where : {id: itemId}})
-        return {message:"Item Deleted Successfully"}
-    }catch(error){
-        throw new Error("Error while delete"+error.message)
+export const deleteItemService = async (itemId) => {
+  try {
+    const deletedCount = await Item.destroy({ where: { id: itemId } });
+
+    if (deletedCount === 0) {
+      // nothing was deleted
+      throw new Error("Item not found");
     }
-}
+
+    return { message: "Item Deleted Successfully" };
+  } catch (error) {
+    throw new Error("Error while deleting: " + error.message);
+  }
+};
+
 
 export const updateItemService = async (req, res) => {
   try {

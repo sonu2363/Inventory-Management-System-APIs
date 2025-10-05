@@ -12,9 +12,15 @@ export const createItem = async(req,res) => {
 }
 
 export const deleteItem = async(req,res) => {
+  try{
     const itemId = req.params.itemId;
     const response = await deleteItemService(itemId);
     return res.status(200).json(response);
+  }catch(error){
+     if (error.message.includes("Item not found")) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 export const updateItem = async(req,res) => {
