@@ -14,12 +14,13 @@ app.use(express.json())
 
 app.use("/api/items",itemRoutes)
 
+//create database if not exits
 await createDatabase();
 
+//connect to database
 await connectDB();
 
 // Seed data function
-
 await seedItems();
 
 app.listen(PORT,console.log("server started"))

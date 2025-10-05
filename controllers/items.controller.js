@@ -37,10 +37,16 @@ export const updateItem = async(req,res) => {
 }
 
 export const getItemWithId = async(req,res) => {
+  try{
     const itemId = req.params.id;
     const response = await fetchItemWithId(itemId)
     return res.status(200).json(response)
-}
+  }catch(error){
+    if (error.message.includes("Item not found")) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
+  }
 
 export const getLowStockInfo = async(req,res) => {
     const response = await fetchLowStockInfo();

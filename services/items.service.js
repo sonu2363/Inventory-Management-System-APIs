@@ -62,9 +62,13 @@ export const updateItemService = async (req, res) => {
 export const fetchItemWithId = async(itemId) => {
     try{
         const result = await Item.findOne({where:{id: itemId}})
+           if (!result) {
+      throw new Error("Item not found");
+    }
+
         return result;
     }catch(error){
-        throw new Error("error getting a item"+error.message)
+        throw new Error("error getting a item "+error.message)
     }
 }
 
