@@ -30,7 +30,7 @@ export const deleteItemService = async (itemId) => {
       throw new Error("Item not found");
     }
 
-    return { message: "Item Deleted Successfully" };
+    return { message: "Item is Deleted Successfully" };
   } catch (error) {
     throw new Error("Error while deleting: " + error.message);
   }
