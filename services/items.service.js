@@ -7,7 +7,7 @@ export const fetchAllItems = async () => {
     const items  = Item.findAll();
     return items;
     } catch(error){
-        throw new Error("Error fetching items"+error.message)
+        throw new Error("Error while fetching items"+error.message)
     }
 }
 
